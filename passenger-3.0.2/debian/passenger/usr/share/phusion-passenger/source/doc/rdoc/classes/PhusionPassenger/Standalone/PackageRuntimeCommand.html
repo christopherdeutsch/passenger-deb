@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Standalone::PackageRuntimeCommand</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Standalone::PackageRuntimeCommand</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/standalone/package_runtime_command_rb.html">lib/phusion_passenger/standalone/package_runtime_command.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+        <a href="Command.html">
+Command
+         </a>
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000103">description</a></li>
+  <li><a href="#M000104">run</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000103"></a><b>description</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000103_source')" id="l_M000103_source">show source</a> ]</p>
+  <div id="M000103_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/package_runtime_command.rb, line 29</span>
+29:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">description</span>
+30:                 <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Package the Phusion Passenger Standalone runtime.&quot;</span>
+31:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000104"></a><b>run</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000104_source')" id="l_M000104_source">show source</a> ]</p>
+  <div id="M000104_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/package_runtime_command.rb, line 33</span>
+33:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>
+34:                 <span class="ruby-identifier">destdir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-value str">&quot;passenger-standalone&quot;</span>)
+35:                 <span class="ruby-identifier">description</span> =
+36:                         <span class="ruby-value str">&quot;Package the Phusion Passenger Standalone runtime into the specified directory.\n&quot;</span> <span class="ruby-operator">&lt;&lt;</span>
+37:                         <span class="ruby-node">&quot;If DIRECTORY is not given then #{destdir} will be used.&quot;</span>
+38:                 <span class="ruby-identifier">parse_options!</span>(<span class="ruby-value str">&quot;package [directory]&quot;</span>, <span class="ruby-identifier">description</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+39:                         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--nginx-version VERSION&quot;</span>, <span class="ruby-constant">String</span>,
+40:                                 <span class="ruby-identifier">wrap_desc</span>(<span class="ruby-node">&quot;Nginx version to use as core (default: #{@options[:nginx_version]})&quot;</span>)) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+41:                                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:nginx_version</span>] = <span class="ruby-identifier">value</span>
+42:                         <span class="ruby-keyword kw">end</span>
+43:                         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--nginx-tarball FILENAME&quot;</span>, <span class="ruby-constant">String</span>,
+44:                                 <span class="ruby-identifier">wrap_desc</span>(<span class="ruby-value str">&quot;Use the given tarball instead of downloading from the Internet&quot;</span>)) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+45:                                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:nginx_tarball</span>] = <span class="ruby-identifier">value</span>
+46:                         <span class="ruby-keyword kw">end</span>
+47:                 <span class="ruby-keyword kw">end</span>
+48:                 
+49:                 <span class="ruby-identifier">destdir</span>     = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-ivar">@args</span>[<span class="ruby-value">0</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@args</span>[<span class="ruby-value">0</span>]
+50:                 <span class="ruby-identifier">runtime_dir</span> = <span class="ruby-node">&quot;#{destdir}/#{runtime_version_string}&quot;</span>
+51:                 <span class="ruby-identifier">support_dir</span> = <span class="ruby-node">&quot;#{runtime_dir}/support&quot;</span>
+52:                 <span class="ruby-identifier">nginx_dir</span>   = <span class="ruby-node">&quot;#{runtime_dir}/nginx-#{@options[:nginx_version]}&quot;</span>
+53:                 
+54:                 <span class="ruby-identifier">sh</span> <span class="ruby-value str">&quot;rm&quot;</span>, <span class="ruby-value str">&quot;-rf&quot;</span>, <span class="ruby-identifier">support_dir</span>
+55:                 <span class="ruby-identifier">sh</span> <span class="ruby-value str">&quot;rm&quot;</span>, <span class="ruby-value str">&quot;-rf&quot;</span>, <span class="ruby-identifier">nginx_dir</span>
+56:                 
+57:                 <span class="ruby-identifier">require</span> <span class="ruby-value str">'phusion_passenger/standalone/runtime_installer'</span>
+58:                 <span class="ruby-identifier">installer</span> = <span class="ruby-constant">RuntimeInstaller</span>.<span class="ruby-identifier">new</span>(
+59:                         <span class="ruby-identifier">:source_root</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">SOURCE_ROOT</span>,
+60:                         <span class="ruby-identifier">:support_dir</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">support_dir</span>,
+61:                         <span class="ruby-identifier">:nginx_dir</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">nginx_dir</span>,
+62:                         <span class="ruby-identifier">:version</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:nginx_version</span>],
+63:                         <span class="ruby-identifier">:tarball</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:nginx_tarball</span>],
+64:                         <span class="ruby-identifier">:download_binaries</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>)
+65:                 <span class="ruby-identifier">installer</span>.<span class="ruby-identifier">start</span>
+66:                 
+67:                 <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">support_dir</span>) <span class="ruby-keyword kw">do</span>
+68:                         <span class="ruby-identifier">support_dir_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">support_dir</span>)
+69:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;cd #{support_dir}&quot;</span>
+70:                         <span class="ruby-identifier">sh</span> <span class="ruby-node">&quot;tar -c . | gzip --best &gt; ../#{support_dir_name}.tar.gz&quot;</span>
+71:                 <span class="ruby-keyword kw">end</span>
+72:                 <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">nginx_dir</span>) <span class="ruby-keyword kw">do</span>
+73:                         <span class="ruby-identifier">nginx_dir_name</span>   = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">nginx_dir</span>)
+74:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;cd #{nginx_dir}&quot;</span>
+75:                         <span class="ruby-identifier">sh</span> <span class="ruby-node">&quot;tar -c . | gzip --best &gt; ../#{nginx_dir_name}.tar.gz&quot;</span>
+76:                 <span class="ruby-keyword kw">end</span>
+77:                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;cd #{runtime_dir}&quot;</span>
+78:                 <span class="ruby-identifier">sh</span> <span class="ruby-value str">&quot;rm&quot;</span>, <span class="ruby-value str">&quot;-rf&quot;</span>, <span class="ruby-identifier">support_dir</span>, <span class="ruby-identifier">nginx_dir</span>
+79:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

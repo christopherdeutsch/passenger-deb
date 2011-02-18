@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Standalone::RuntimeInstaller</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Standalone::RuntimeInstaller</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/standalone/runtime_installer_rb.html">lib/phusion_passenger/standalone/runtime_installer.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+AbstractInstaller
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+Installs the Phusion Passenger <a href="../Standalone.html">Standalone</a>
+runtime by downloading and compiling Nginx, compiling the Phusion Passenger
+support binaries, and storing the results in the designated directories.
+This installer is entirely non-interactive.
+</p>
+<p>
+The following option must be given:
+</p>
+<ul>
+<li>source_root: Path to the Phusion Passenger source root.
+
+</li>
+</ul>
+<p>
+If you want <a href="RuntimeInstaller.html">RuntimeInstaller</a> to compile
+and install Nginx, then you must specify these options:
+</p>
+<ul>
+<li>nginx_dir: Nginx will be installed into this directory.
+
+</li>
+<li>support_dir: See below.
+
+</li>
+<li>version (optional): The Nginx version to download. If not given then a
+hardcoded version number will be used.
+
+</li>
+<li>tarball (optional): The location to the Nginx tarball. This tarball
+<b>must</b> contain the Nginx version as specified by <tt>version</tt>. If
+<tt>tarball</tt> is given then Nginx will not be downloaded; it will be
+extracted from this tarball instead.
+
+</li>
+</ul>
+<p>
+If you want <a href="RuntimeInstaller.html">RuntimeInstaller</a> to compile
+and install the Phusion Passenger support files, then you must specify
+these:
+</p>
+<ul>
+<li>support_dir: The support files will be installed here. Should not equal
+<tt>source_root</tt>, or funny things might happen.
+
+</li>
+</ul>
+<p>
+Other optional options:
+</p>
+<ul>
+<li>download_binaries: If true then <a
+href="RuntimeInstaller.html">RuntimeInstaller</a> will attempt to download
+precompiled Nginx binaries and precompiled Phusion Passenger support files
+from the network, if they exist for the current platform. The default is
+false.
+
+</li>
+<li>binaries_url_root: The URL on which to look for the aforementioned
+binaries. The default points to the Phusion website.
+
+</li>
+</ul>
+<p>
+Please note that <a href="RuntimeInstaller.html">RuntimeInstaller</a> will
+try to avoid compiling/installing things that don&#8216;t need to be
+compiled/installed. This is done by checking whether some key files exist,
+and concluding that something doesn&#8216;t need to be compiled/installed
+if they do. This quick check is of course not perfect; if you want to force
+a recompilation/reinstall then you should remove <tt>nginx_dir</tt> and
+<tt>support_dir</tt> before starting this installer.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000111">after_install</a></li>
+  <li><a href="#M000110">before_install</a></li>
+  <li><a href="#M000107">dependencies</a></li>
+  <li><a href="#M000109">install!</a></li>
+  <li><a href="#M000108">users_guide</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="Utils.html">Utils</a></li>
+</ul>
+
+
+
+
+
+<div class="sectiontitle">Protected Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000111"></a><b>after_install</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000111_source')" id="l_M000111_source">show source</a> ]</p>
+  <div id="M000111_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/runtime_installer.rb, line 173</span>
+173:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_install</span>
+174:                 <span class="ruby-keyword kw">super</span>
+175:                 <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span>(<span class="ruby-ivar">@working_dir</span>)
+176:                 <span class="ruby-ivar">@plugin</span>.<span class="ruby-identifier">call_hook</span>(<span class="ruby-identifier">:runtime_installer_cleanup</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@plugin</span>
+177:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000110"></a><b>before_install</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000110_source')" id="l_M000110_source">show source</a> ]</p>
+  <div id="M000110_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/runtime_installer.rb, line 163</span>
+163:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">before_install</span>
+164:                 <span class="ruby-keyword kw">super</span>
+165:                 <span class="ruby-ivar">@plugin</span>.<span class="ruby-identifier">call_hook</span>(<span class="ruby-identifier">:runtime_installer_start</span>, <span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@plugin</span>
+166:                 <span class="ruby-ivar">@working_dir</span> = <span class="ruby-node">&quot;/tmp/#{myself}-passenger-standalone-#{Process.pid}&quot;</span>
+167:                 <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span>(<span class="ruby-ivar">@working_dir</span>)
+168:                 <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-ivar">@working_dir</span>)
+169:                 <span class="ruby-ivar">@download_binaries</span> = <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword kw">defined?</span>(<span class="ruby-ivar">@download_binaries</span>)
+170:                 <span class="ruby-ivar">@binaries_url_root</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">STANDALONE_BINARIES_URL_ROOT</span>
+171:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000107"></a><b>dependencies</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000107_source')" id="l_M000107_source">show source</a> ]</p>
+  <div id="M000107_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/runtime_installer.rb, line 76</span>
+76:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dependencies</span>
+77:                 <span class="ruby-identifier">result</span> = [
+78:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">GCC</span>,
+79:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">GnuMake</span>,
+80:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">DownloadTool</span>,
+81:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">Ruby_DevHeaders</span>,
+82:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">Ruby_OpenSSL</span>,
+83:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyGems</span>,
+84:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">Rake</span>,
+85:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">Rack</span>,
+86:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">Curl_Dev</span>,
+87:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">OpenSSL_Dev</span>,
+88:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">Zlib_Dev</span>,
+89:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">File_Tail</span>,
+90:                         <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">Daemon_Controller</span>,
+91:                 ]
+92:                 <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">fastthread_required?</span>
+93:                         <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">FastThread</span>
+94:                 <span class="ruby-keyword kw">end</span>
+95:                 <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">asciidoc_required?</span>
+96:                         <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Dependencies</span><span class="ruby-operator">::</span><span class="ruby-constant">AsciiDoc</span>
+97:                 <span class="ruby-keyword kw">end</span>
+98:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>
+99:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000109"></a><b>install!</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000109_source')" id="l_M000109_source">show source</a> ]</p>
+  <div id="M000109_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/runtime_installer.rb, line 105</span>
+105:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install!</span>
+106:                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@support_dir</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@nginx_dir</span>
+107:                         <span class="ruby-identifier">show_welcome_screen</span>
+108:                 <span class="ruby-keyword kw">end</span>
+109:                 <span class="ruby-identifier">check_dependencies</span>(<span class="ruby-keyword kw">false</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">exit</span>(<span class="ruby-value">1</span>)
+110:                 <span class="ruby-identifier">puts</span>
+111:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">passenger_support_files_need_to_be_installed?</span>
+112:                         <span class="ruby-identifier">check_whether_we_can_write_to</span>(<span class="ruby-ivar">@support_dir</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">exit</span>(<span class="ruby-value">1</span>)
+113:                 <span class="ruby-keyword kw">end</span>
+114:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nginx_needs_to_be_installed?</span>
+115:                         <span class="ruby-identifier">check_whether_we_can_write_to</span>(<span class="ruby-ivar">@nginx_dir</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">exit</span>(<span class="ruby-value">1</span>)
+116:                 <span class="ruby-keyword kw">end</span>
+117:                 
+118:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">passenger_support_files_need_to_be_installed?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">should_download_binaries?</span>
+119:                         <span class="ruby-identifier">download_and_extract_passenger_binaries</span>(<span class="ruby-ivar">@support_dir</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span><span class="ruby-operator">|</span>
+120:                                 <span class="ruby-identifier">show_progress</span>(<span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>, <span class="ruby-value str">&quot;Extracting Passenger binaries...&quot;</span>)
+121:                         <span class="ruby-keyword kw">end</span>
+122:                         <span class="ruby-identifier">puts</span>
+123:                         <span class="ruby-identifier">puts</span>
+124:                 <span class="ruby-keyword kw">end</span>
+125:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nginx_needs_to_be_installed?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">should_download_binaries?</span>
+126:                         <span class="ruby-identifier">download_and_extract_nginx_binaries</span>(<span class="ruby-ivar">@nginx_dir</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span><span class="ruby-operator">|</span>
+127:                                 <span class="ruby-identifier">show_progress</span>(<span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>, <span class="ruby-value str">&quot;Extracting Nginx binaries...&quot;</span>)
+128:                         <span class="ruby-keyword kw">end</span>
+129:                         <span class="ruby-identifier">puts</span>
+130:                         <span class="ruby-identifier">puts</span>
+131:                 <span class="ruby-keyword kw">end</span>
+132:                 
+133:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nginx_needs_to_be_installed?</span>
+134:                         <span class="ruby-identifier">nginx_source_dir</span> = <span class="ruby-identifier">download_and_extract_nginx_sources</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span><span class="ruby-operator">|</span>
+135:                                 <span class="ruby-identifier">show_progress</span>(<span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-value">1</span>, <span class="ruby-value">7</span>, <span class="ruby-value str">&quot;Extracting...&quot;</span>)
+136:                         <span class="ruby-keyword kw">end</span>
+137:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nginx_source_dir</span>.<span class="ruby-identifier">nil?</span>
+138:                                 <span class="ruby-identifier">puts</span>
+139:                                 <span class="ruby-identifier">show_possible_solutions_for_download_and_extraction_problems</span>
+140:                                 <span class="ruby-identifier">exit</span>(<span class="ruby-value">1</span>)
+141:                         <span class="ruby-keyword kw">end</span>
+142:                 <span class="ruby-keyword kw">end</span>
+143:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">passenger_support_files_need_to_be_installed?</span>
+144:                         <span class="ruby-identifier">install_passenger_support_files</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-identifier">phase</span>, <span class="ruby-identifier">status_text</span><span class="ruby-operator">|</span>
+145:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">phase</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+146:                                         <span class="ruby-identifier">show_progress</span>(<span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-value">2</span>, <span class="ruby-value">7</span>, <span class="ruby-identifier">status_text</span>)
+147:                                 <span class="ruby-keyword kw">else</span>
+148:                                         <span class="ruby-identifier">show_progress</span>(<span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-value">3</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>, <span class="ruby-value">7</span>, <span class="ruby-identifier">status_text</span>)
+149:                                 <span class="ruby-keyword kw">end</span>
+150:                         <span class="ruby-keyword kw">end</span>
+151:                 <span class="ruby-keyword kw">end</span>
+152:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nginx_needs_to_be_installed?</span>
+153:                         <span class="ruby-identifier">install_nginx_from_source</span>(<span class="ruby-identifier">nginx_source_dir</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-identifier">status_text</span><span class="ruby-operator">|</span>
+154:                                 <span class="ruby-identifier">show_progress</span>(<span class="ruby-identifier">progress</span>, <span class="ruby-identifier">total</span>, <span class="ruby-value">6</span><span class="ruby-operator">..</span><span class="ruby-value">7</span>, <span class="ruby-value">7</span>, <span class="ruby-identifier">status_text</span>)
+155:                         <span class="ruby-keyword kw">end</span>
+156:                 <span class="ruby-keyword kw">end</span>
+157:                 
+158:                 <span class="ruby-identifier">puts</span>
+159:                 <span class="ruby-identifier">color_puts</span> <span class="ruby-value str">&quot;&lt;green&gt;&lt;b&gt;All done!&lt;/b&gt;&lt;/green&gt;&quot;</span>
+160:                 <span class="ruby-identifier">puts</span>
+161:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000108"></a><b>users_guide</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000108_source')" id="l_M000108_source">show source</a> ]</p>
+  <div id="M000108_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/runtime_installer.rb, line 101</span>
+101:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">users_guide</span>
+102:                 <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;#{DOCDIR}/Users guide Standalone.html&quot;</span>
+103:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

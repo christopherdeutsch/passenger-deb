@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::AppProcess</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::AppProcess</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../files/lib/phusion_passenger/app_process_rb.html">lib/phusion_passenger/app_process.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+Contains various information about an application process.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000308">close</a></li>
+  <li><a href="#M000304">detect_framework_version</a></li>
+  <li><a href="#M000307">new</a></li>
+  <li><a href="#M000305">read_from_channel</a></li>
+  <li><a href="#M000306">write_to_channel</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>app_root</td>
+    <td class='attr-desc'>
+The root directory of this application process.
+
+</td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>owner_pipe</td>
+    <td class='attr-desc'>
+The owner pipe of the application instance (an <a href="../IO.html">IO</a>
+object). Please see RequestHandler for a description of the owner pipe.
+
+</td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>pid</td>
+    <td class='attr-desc'>
+This process&#8216;s PID.
+
+</td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>server_sockets</td>
+    <td class='attr-desc'>
+A hash containing all server sockets that this application process listens
+on. The hash is in the form of:
+
+<pre>
+  {
+     name1 =&gt; [socket_address1, socket_type1],
+     name2 =&gt; [socket_address2, socket_type2],
+     ...
+  }
+</pre>
+<p>
+<tt>name</tt> is a Symbol. <tt>socket_addressx</tt> is the address of the
+socket and +socket_type1+ is the socket&#8216;s type (either
+&#8216;unix&#8217; or &#8216;tcp&#8217;). There&#8216;s guaranteed to be at
+least one server socket, namely one with the name +:main+.
+</p>
+</td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000304"></a><b>detect_framework_version</b>(app_root)
+  </div>
+  <div class="description">
+  <ul>
+<li>Returns the Ruby on Rails version that the application requires.
+
+</li>
+<li>Returns <tt>:vendor</tt> if the application has a vendored Rails.
+
+</li>
+<li>Returns nil if the application doesn&#8216;t specify a particular version.
+
+</li>
+</ul>
+<p>
+Raises <a href="VersionNotFound.html">VersionNotFound</a> if the required
+Rails version is not installed.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000304_source')" id="l_M000304_source">show source</a> ]</p>
+  <div id="M000304_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/app_process.rb, line 59</span>
+59:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">detect_framework_version</span>(<span class="ruby-identifier">app_root</span>)
+60:                 <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-node">&quot;#{app_root}/vendor/rails/railties&quot;</span>)
+61:                         <span class="ruby-comment cmt"># NOTE: We must check for 'rails/railties' and not just 'rails'.</span>
+62:                         <span class="ruby-comment cmt"># Typo's vendor directory contains an empty 'rails' directory.</span>
+63:                         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:vendor</span>
+64:                 <span class="ruby-keyword kw">end</span>
+65:                 
+66:                 <span class="ruby-identifier">environment_rb</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-node">&quot;#{app_root}/config/environment.rb&quot;</span>)
+67:                 <span class="ruby-identifier">environment_rb</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^[^#]*RAILS_GEM_VERSION\s*=\s*[&quot;']([!~&lt;&gt;=]*\s*[\d.]+)[&quot;']/</span>
+68:                 <span class="ruby-identifier">gem_version_spec</span> = <span class="ruby-identifier">$1</span>
+69:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">gem_version_spec</span>.<span class="ruby-identifier">nil?</span>
+70:                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+71:                 <span class="ruby-keyword kw">end</span>
+72:                 
+73:                 <span class="ruby-identifier">search_results</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">cache</span>.<span class="ruby-identifier">search</span>(<span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'rails'</span>, <span class="ruby-identifier">gem_version_spec</span>), <span class="ruby-keyword kw">true</span>)
+74:                 <span class="ruby-identifier">found_version</span> = <span class="ruby-identifier">search_results</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+75:                         <span class="ruby-identifier">x</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">version</span>
+76:                 <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">last</span>
+77:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">found_version</span>.<span class="ruby-identifier">nil?</span>
+78:                         <span class="ruby-comment cmt"># If this error was reported before, then the cache might be out of</span>
+79:                         <span class="ruby-comment cmt"># date because the Rails version may have been installed now.</span>
+80:                         <span class="ruby-comment cmt"># So we reload the RubyGems cache and try again.</span>
+81:                         <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">clear_paths</span>
+82:                         <span class="ruby-identifier">search_results</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">cache</span>.<span class="ruby-identifier">search</span>(<span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'rails'</span>, <span class="ruby-identifier">gem_version_spec</span>), <span class="ruby-keyword kw">true</span>)
+83:                         <span class="ruby-identifier">found_version</span> = <span class="ruby-identifier">search_results</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+84:                                 <span class="ruby-identifier">x</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">version</span>
+85:                         <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">last</span>
+86:                 <span class="ruby-keyword kw">end</span>
+87:                 
+88:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">found_version</span>.<span class="ruby-identifier">nil?</span>
+89:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">VersionNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;There is no Ruby on Rails version &quot;</span> <span class="ruby-operator">&lt;&lt;</span>
+90:                                 <span class="ruby-node">&quot;installed that matches version \&quot;#{gem_version_spec}\&quot;&quot;</span>,
+91:                                 <span class="ruby-identifier">gem_version_spec</span>)
+92:                 <span class="ruby-keyword kw">else</span>
+93:                         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">found_version</span>
+94:                 <span class="ruby-keyword kw">end</span>
+95:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000307"></a><b>new</b>(app_root, pid, owner_pipe, server_sockets)
+  </div>
+  <div class="description">
+  <p>
+Creates a <a href="AppProcess.html#M000307">new</a> <a
+href="AppProcess.html">AppProcess</a> instance. The parameters correspond
+with the attributes of the same names. No exceptions will be thrown.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000307_source')" id="l_M000307_source">show source</a> ]</p>
+  <div id="M000307_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/app_process.rb, line 137</span>
+137:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app_root</span>, <span class="ruby-identifier">pid</span>, <span class="ruby-identifier">owner_pipe</span>, <span class="ruby-identifier">server_sockets</span>)
+138:                 <span class="ruby-ivar">@app_root</span>   = <span class="ruby-identifier">app_root</span>
+139:                 <span class="ruby-ivar">@pid</span>        = <span class="ruby-identifier">pid</span>
+140:                 <span class="ruby-ivar">@owner_pipe</span> = <span class="ruby-identifier">owner_pipe</span>
+141:                 
+142:                 <span class="ruby-comment cmt"># We copy the values like this so one can directly pass</span>
+143:                 <span class="ruby-comment cmt"># AbstractRequestHandler#server_sockets as arguments</span>
+144:                 <span class="ruby-comment cmt"># without having AppProcess store references to the socket</span>
+145:                 <span class="ruby-comment cmt"># IO objects.</span>
+146:                 <span class="ruby-ivar">@server_sockets</span> = {}
+147:                 <span class="ruby-identifier">server_sockets</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+148:                         <span class="ruby-ivar">@server_sockets</span>[<span class="ruby-identifier">name</span>] = [<span class="ruby-identifier">value</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">value</span>[<span class="ruby-value">1</span>]]
+149:                 <span class="ruby-keyword kw">end</span>
+150:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000305"></a><b>read_from_channel</b>(channel)
+  </div>
+  <div class="description">
+  <p>
+Construct an <a href="AppProcess.html">AppProcess</a> by reading
+information from the given <a
+href="MessageChannel.html">MessageChannel</a>. The other side of the
+channel must be writing <a href="AppProcess.html">AppProcess</a>
+information using <a
+href="AppProcess.html#M000306">AppProcess#write_to_channel</a>.
+</p>
+<p>
+Might raise SystemCallError, IOError or SocketError.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000305_source')" id="l_M000305_source">show source</a> ]</p>
+  <div id="M000305_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/app_process.rb, line 102</span>
+102:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">read_from_channel</span>(<span class="ruby-identifier">channel</span>)
+103:                 <span class="ruby-identifier">app_root</span>, <span class="ruby-identifier">pid</span>, <span class="ruby-identifier">n_server_sockets</span> = <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">read</span>
+104:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">app_root</span>.<span class="ruby-identifier">nil?</span>
+105:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-value str">&quot;Connection closed&quot;</span>
+106:                 <span class="ruby-keyword kw">end</span>
+107:                 
+108:                 <span class="ruby-identifier">server_sockets</span> = {}
+109:                 <span class="ruby-identifier">n_server_sockets</span>.<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span>
+110:                         <span class="ruby-identifier">message</span> = <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">read</span>
+111:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">message</span>.<span class="ruby-identifier">nil?</span>
+112:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-value str">&quot;Connection closed&quot;</span>
+113:                         <span class="ruby-keyword kw">end</span>
+114:                         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">message</span>.<span class="ruby-identifier">shift</span>
+115:                         <span class="ruby-identifier">server_sockets</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">message</span>
+116:                 <span class="ruby-keyword kw">end</span>
+117:                 
+118:                 <span class="ruby-identifier">owner_pipe</span> = <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">recv_io</span>
+119:                 
+120:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">new</span>(<span class="ruby-identifier">app_root</span>, <span class="ruby-identifier">pid</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">owner_pipe</span>, <span class="ruby-identifier">server_sockets</span>)
+121:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000308"></a><b>close</b>()
+  </div>
+  <div class="description">
+  <p>
+Close the connection with the application process. If there are no other
+processes that have connections to this application process, then it will
+shutdown as soon as possible.
+</p>
+<p>
+See also AbstractRequestHandler#owner_pipe.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000308_source')" id="l_M000308_source">show source</a> ]</p>
+  <div id="M000308_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/app_process.rb, line 157</span>
+157:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+158:                 <span class="ruby-ivar">@owner_pipe</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>
+159:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000306"></a><b>write_to_channel</b>(channel)
+  </div>
+  <div class="description">
+  <p>
+Write this <a href="AppProcess.html">AppProcess</a>&#8216;s information
+over the given <a href="MessageChannel.html">MessageChannel</a>. The other
+side must read the information using AppProces.read_from_channel.
+</p>
+<p>
+Might raise SystemCallError, IOError or SocketError.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000306_source')" id="l_M000306_source">show source</a> ]</p>
+  <div id="M000306_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/app_process.rb, line 127</span>
+127:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_to_channel</span>(<span class="ruby-identifier">channel</span>)
+128:                 <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">write</span>(<span class="ruby-ivar">@app_root</span>, <span class="ruby-ivar">@pid</span>, <span class="ruby-ivar">@server_sockets</span>.<span class="ruby-identifier">size</span>)
+129:                 <span class="ruby-ivar">@server_sockets</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+130:                         <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">value</span>)
+131:                 <span class="ruby-keyword kw">end</span>
+132:                 <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">send_io</span>(<span class="ruby-ivar">@owner_pipe</span>)
+133:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

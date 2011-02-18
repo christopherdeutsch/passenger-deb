@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Utils::UnseekableSocket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Utils::UnseekableSocket</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/utils/unseekable_socket_rb.html">lib/phusion_passenger/utils/unseekable_socket.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+Some frameworks (e.g. Merb) call <em>seek</em> and <em>rewind</em> on the
+input stream if it responds to these methods. In case of Phusion Passenger,
+the input stream is a socket, and altough socket objects respond to
+<em>seek</em> and <em>rewind</em>, calling these methods will raise an
+exception. We don&#8216;t want this to happen so in <a
+href="../AbstractRequestHandler.html">AbstractRequestHandler</a> we <a
+href="UnseekableSocket.html#M000254">wrap</a> the client socket into an <a
+href="UnseekableSocket.html">UnseekableSocket</a> wrapper, which
+doesn&#8216;t respond to these methods.
+</p>
+<p>
+We used to dynamically undef <em>seek</em> and <em>rewind</em> on sockets,
+but this blows the Ruby interpreter&#8216;s method cache and made things
+slower. Wrapping a socket is faster despite extra method calls.
+</p>
+<p>
+Furthermore, all exceptions originating from the wrapped socket will be
+annotated. One can check whether a certain exception originates from the
+wrapped socket by calling #source_of_exception?
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000260">addr</a></li>
+  <li><a href="#M000258">binmode</a></li>
+  <li><a href="#M000272">close</a></li>
+  <li><a href="#M000273">close_read</a></li>
+  <li><a href="#M000274">close_write</a></li>
+  <li><a href="#M000271">closed?</a></li>
+  <li><a href="#M000270">each</a></li>
+  <li><a href="#M000257">flush</a></li>
+  <li><a href="#M000266">gets</a></li>
+  <li><a href="#M000265">puts</a></li>
+  <li><a href="#M000267">read</a></li>
+  <li><a href="#M000269">readline</a></li>
+  <li><a href="#M000268">readpartial</a></li>
+  <li><a href="#M000275">source_of_exception?</a></li>
+  <li><a href="#M000256">sync=</a></li>
+  <li><a href="#M000259">to_io</a></li>
+  <li><a href="#M000255">wrap</a></li>
+  <li><a href="#M000254">wrap</a></li>
+  <li><a href="#M000261">write</a></li>
+  <li><a href="#M000262">writev</a></li>
+  <li><a href="#M000263">writev2</a></li>
+  <li><a href="#M000264">writev3</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000254"></a><b>wrap</b>(socket)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000254_source')" id="l_M000254_source">show source</a> ]</p>
+  <div id="M000254_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 44</span>
+44:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">socket</span>)
+45:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">new</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">socket</span>)
+46:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000260"></a><b>addr</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000260_source')" id="l_M000260_source">show source</a> ]</p>
+  <div id="M000260_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 94</span>
+94:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">addr</span>
+95:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">addr</span>
+96:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+97:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+98:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000258"></a><b>binmode</b>()
+  </div>
+  <div class="description">
+  <p>
+Already set to binary mode.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000258_source')" id="l_M000258_source">show source</a> ]</p>
+  <div id="M000258_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 87</span>
+87:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">binmode</span>
+88:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000272"></a><b>close</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000272_source')" id="l_M000272_source">show source</a> ]</p>
+  <div id="M000272_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 166</span>
+166:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+167:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">close</span>
+168:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+169:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+170:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000273"></a><b>close_read</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000273_source')" id="l_M000273_source">show source</a> ]</p>
+  <div id="M000273_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 172</span>
+172:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close_read</span>
+173:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">close_read</span>
+174:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+175:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+176:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000274"></a><b>close_write</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000274_source')" id="l_M000274_source">show source</a> ]</p>
+  <div id="M000274_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 178</span>
+178:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close_write</span>
+179:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">close_write</span>
+180:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+181:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+182:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000271"></a><b>closed?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000271_source')" id="l_M000271_source">show source</a> ]</p>
+  <div id="M000271_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 160</span>
+160:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">closed?</span>
+161:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">closed?</span>
+162:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+163:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+164:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000270"></a><b>each</b>(&amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000270_source')" id="l_M000270_source">show source</a> ]</p>
+  <div id="M000270_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 154</span>
+154:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+155:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+156:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+157:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+158:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000257"></a><b>flush</b>()
+  </div>
+  <div class="description">
+  <p>
+Socket is sync&#8216;ed so flushing shouldn&#8216;t do anything.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000257_source')" id="l_M000257_source">show source</a> ]</p>
+  <div id="M000257_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 83</span>
+83:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush</span>
+84:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000266"></a><b>gets</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000266_source')" id="l_M000266_source">show source</a> ]</p>
+  <div id="M000266_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 130</span>
+130:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gets</span>
+131:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">gets</span>
+132:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+133:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+134:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000265"></a><b>puts</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000265_source')" id="l_M000265_source">show source</a> ]</p>
+  <div id="M000265_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 124</span>
+124:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">puts</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+125:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+126:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+127:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+128:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000267"></a><b>read</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000267_source')" id="l_M000267_source">show source</a> ]</p>
+  <div id="M000267_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 136</span>
+136:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+137:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">read</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+138:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+139:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+140:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000269"></a><b>readline</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000269_source')" id="l_M000269_source">show source</a> ]</p>
+  <div id="M000269_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 148</span>
+148:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">readline</span>
+149:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">readline</span>
+150:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+151:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+152:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000268"></a><b>readpartial</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000268_source')" id="l_M000268_source">show source</a> ]</p>
+  <div id="M000268_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 142</span>
+142:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">readpartial</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+143:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">readpartial</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+144:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+145:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+146:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000275"></a><b>source_of_exception?</b>(exception)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000275_source')" id="l_M000275_source">show source</a> ]</p>
+  <div id="M000275_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 184</span>
+184:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">source_of_exception?</span>(<span class="ruby-identifier">exception</span>)
+185:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value str">&quot;@from_unseekable_socket&quot;</span><span class="ruby-value str">&quot;@from_unseekable_socket&quot;</span>) <span class="ruby-operator">==</span> <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">object_id</span>
+186:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000256"></a><b>sync=</b>(value)
+  </div>
+  <div class="description">
+  <p>
+Don&#8216;t allow disabling of sync.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000256_source')" id="l_M000256_source">show source</a> ]</p>
+  <div id="M000256_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 79</span>
+79:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sync=</span>(<span class="ruby-identifier">value</span>)
+80:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000259"></a><b>to_io</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000259_source')" id="l_M000259_source">show source</a> ]</p>
+  <div id="M000259_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 90</span>
+90:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_io</span>
+91:                 <span class="ruby-keyword kw">self</span>
+92:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000255"></a><b>wrap</b>(socket)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000255_source')" id="l_M000255_source">show source</a> ]</p>
+  <div id="M000255_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 48</span>
+48:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">socket</span>)
+49:                 <span class="ruby-comment cmt"># Some people report that sometimes their Ruby (MRI/REE)</span>
+50:                 <span class="ruby-comment cmt"># processes get stuck with 100% CPU usage. Upon further</span>
+51:                 <span class="ruby-comment cmt"># inspection with strace, it turns out that these Ruby</span>
+52:                 <span class="ruby-comment cmt"># processes are continuously calling lseek() on a socket,</span>
+53:                 <span class="ruby-comment cmt"># which of course returns ESPIPE as error. gdb reveals</span>
+54:                 <span class="ruby-comment cmt"># lseek() is called by fwrite(), which in turn is called</span>
+55:                 <span class="ruby-comment cmt"># by rb_fwrite(). The affected socket is the</span>
+56:                 <span class="ruby-comment cmt"># AbstractRequestHandler client socket.</span>
+57:                 <span class="ruby-comment cmt">#</span>
+58:                 <span class="ruby-comment cmt"># I inspected the MRI source code and didn't find</span>
+59:                 <span class="ruby-comment cmt"># anything that would explain this behavior. This makes</span>
+60:                 <span class="ruby-comment cmt"># me think that it's a glibc bug, but that's very</span>
+61:                 <span class="ruby-comment cmt"># unlikely.</span>
+62:                 <span class="ruby-comment cmt">#</span>
+63:                 <span class="ruby-comment cmt"># The rb_fwrite() implementation takes an entirely</span>
+64:                 <span class="ruby-comment cmt"># different code path if I set 'sync' to true: it will</span>
+65:                 <span class="ruby-comment cmt"># skip fwrite() and use write() instead. So here we set</span>
+66:                 <span class="ruby-comment cmt"># 'sync' to true in the hope that this will work around</span>
+67:                 <span class="ruby-comment cmt"># the problem.</span>
+68:                 <span class="ruby-identifier">socket</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword kw">true</span>
+69:                 
+70:                 <span class="ruby-comment cmt"># There's no need to set the encoding for Ruby 1.9 because</span>
+71:                 <span class="ruby-comment cmt"># abstract_request_handler.rb is tagged with 'encoding: binary'.</span>
+72:                 
+73:                 <span class="ruby-ivar">@socket</span> = <span class="ruby-identifier">socket</span>
+74:                 
+75:                 <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>
+76:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000261"></a><b>write</b>(string)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000261_source')" id="l_M000261_source">show source</a> ]</p>
+  <div id="M000261_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 100</span>
+100:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">string</span>)
+101:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">string</span>)
+102:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+103:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+104:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000262"></a><b>writev</b>(components)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000262_source')" id="l_M000262_source">show source</a> ]</p>
+  <div id="M000262_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 106</span>
+106:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">writev</span>(<span class="ruby-identifier">components</span>)
+107:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">writev</span>(<span class="ruby-identifier">components</span>)
+108:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+109:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+110:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000263"></a><b>writev2</b>(components, components2)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000263_source')" id="l_M000263_source">show source</a> ]</p>
+  <div id="M000263_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 112</span>
+112:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">writev2</span>(<span class="ruby-identifier">components</span>, <span class="ruby-identifier">components2</span>)
+113:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">writev2</span>(<span class="ruby-identifier">components</span>, <span class="ruby-identifier">components2</span>)
+114:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+115:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+116:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000264"></a><b>writev3</b>(components, components2, components3)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000264_source')" id="l_M000264_source">show source</a> ]</p>
+  <div id="M000264_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/unseekable_socket.rb, line 118</span>
+118:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">writev3</span>(<span class="ruby-identifier">components</span>, <span class="ruby-identifier">components2</span>, <span class="ruby-identifier">components3</span>)
+119:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">writev3</span>(<span class="ruby-identifier">components</span>, <span class="ruby-identifier">components2</span>, <span class="ruby-identifier">components3</span>)
+120:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+121:                 <span class="ruby-identifier">raise</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">e</span>)
+122:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

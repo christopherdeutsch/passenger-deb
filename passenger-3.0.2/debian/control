@@ -1,0 +1,13 @@
+Source: passenger
+Section: unknown
+Priority: extra
+Maintainer: root <root@ip-10-117-43-239.ec2.internal>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.3
+Homepage: <insert the upstream URL, if relevant>
+
+Package: passenger
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

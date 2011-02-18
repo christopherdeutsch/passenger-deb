@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::MessageClient</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::MessageClient</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../files/lib/phusion_passenger/message_client_rb.html">lib/phusion_passenger/message_client.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+A convenience class for communicating with MessageServer servers, for
+example the ApplicationPool server.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000375">backtraces</a></li>
+  <li><a href="#M000381">check_security_response</a></li>
+  <li><a href="#M000370">close</a></li>
+  <li><a href="#M000371">connected?</a></li>
+  <li><a href="#M000372">detach</a></li>
+  <li><a href="#M000369">new</a></li>
+  <li><a href="#M000376">read</a></li>
+  <li><a href="#M000379">read_scalar</a></li>
+  <li><a href="#M000380">recv_io</a></li>
+  <li><a href="#M000373">status</a></li>
+  <li><a href="#M000377">write</a></li>
+  <li><a href="#M000378">write_scalar</a></li>
+  <li><a href="#M000374">xml</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="Utils.html">Utils</a></li>
+</ul>
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000369"></a><b>new</b>(username, password, address = &quot;unix:
+  </div>
+  <div class="description">
+  <p>
+Connect to the given server. By default it connects to the current
+generation&#8216;s helper server.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000369_source')" id="l_M000369_source">show source</a> ]</p>
+  <div id="M000369_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 39</span>
+39:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">username</span>, <span class="ruby-identifier">password</span>, <span class="ruby-identifier">address</span> = <span class="ruby-node">&quot;unix:#{Utils.passenger_tmpdir}/socket&quot;</span>)
+40:                 <span class="ruby-ivar">@socket</span> = <span class="ruby-identifier">connect_to_server</span>(<span class="ruby-identifier">address</span>)
+41:                 <span class="ruby-keyword kw">begin</span>
+42:                         <span class="ruby-ivar">@channel</span> = <span class="ruby-constant">MessageChannel</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@socket</span>)
+43:                         
+44:                         <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">read</span>
+45:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span>
+46:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">EOFError</span>
+47:                         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-value">2</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;version&quot;</span>
+48:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-value str">&quot;The message server didn't sent a valid version identifier&quot;</span>
+49:                         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;1&quot;</span>
+50:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-node">&quot;Unsupported message server protocol version #{result[1]}&quot;</span>
+51:                         <span class="ruby-keyword kw">end</span>
+52:                         
+53:                         <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">write_scalar</span>(<span class="ruby-identifier">username</span>)
+54:                         <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">write_scalar</span>(<span class="ruby-identifier">password</span>)
+55:                 
+56:                         <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">read</span>
+57:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span>
+58:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">EOFError</span>
+59:                         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;ok&quot;</span>
+60:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">SecurityError</span>, <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span>]
+61:                         <span class="ruby-keyword kw">end</span>
+62:                 <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+63:                         <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">close</span>
+64:                         <span class="ruby-identifier">raise</span>
+65:                 <span class="ruby-keyword kw">end</span>
+66:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000375"></a><b>backtraces</b>()
+  </div>
+  <div class="description">
+  <p>
+BacktracesServer methods ###
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000375_source')" id="l_M000375_source">show source</a> ]</p>
+  <div id="M000375_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 107</span>
+107:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtraces</span>
+108:                 <span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;backtraces&quot;</span>)
+109:                 <span class="ruby-identifier">check_security_response</span>
+110:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">read_scalar</span>
+111:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000381"></a><b>check_security_response</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000381_source')" id="l_M000381_source">show source</a> ]</p>
+  <div id="M000381_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 150</span>
+150:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_security_response</span>
+151:                 <span class="ruby-keyword kw">begin</span>
+152:                         <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">read</span>
+153:                 <span class="ruby-keyword kw">rescue</span>
+154:                         <span class="ruby-identifier">auto_disconnect</span>
+155:                         <span class="ruby-identifier">raise</span>
+156:                 <span class="ruby-keyword kw">end</span>
+157:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span>
+158:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">EOFError</span>
+159:                 <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;Passed security&quot;</span>
+160:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">SecurityError</span>, <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span>]
+161:                 <span class="ruby-keyword kw">end</span>
+162:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000370"></a><b>close</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000370_source')" id="l_M000370_source">show source</a> ]</p>
+  <div id="M000370_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 68</span>
+68:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+69:                 <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@socket</span>
+70:                 <span class="ruby-ivar">@channel</span> = <span class="ruby-ivar">@socket</span> = <span class="ruby-keyword kw">nil</span>
+71:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000371"></a><b>connected?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000371_source')" id="l_M000371_source">show source</a> ]</p>
+  <div id="M000371_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 73</span>
+73:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected?</span>
+74:                 <span class="ruby-keyword kw">return</span> <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@channel</span>
+75:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000372"></a><b>detach</b>(detach_key)
+  </div>
+  <div class="description">
+  <p>
+ApplicationPool::Server methods ###
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000372_source')" id="l_M000372_source">show source</a> ]</p>
+  <div id="M000372_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 79</span>
+79:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">detach</span>(<span class="ruby-identifier">detach_key</span>)
+80:                 <span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;detach&quot;</span>, <span class="ruby-identifier">detach_key</span>)
+81:                 <span class="ruby-identifier">check_security_response</span>
+82:                 <span class="ruby-identifier">result</span> = <span class="ruby-identifier">read</span>
+83:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span>
+84:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">EOFError</span>
+85:                 <span class="ruby-keyword kw">else</span>
+86:                         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;true&quot;</span>
+87:                 <span class="ruby-keyword kw">end</span>
+88:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000376"></a><b>read</b>()
+  </div>
+  <div class="description">
+  <p>
+Low level I/O methods ###
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000376_source')" id="l_M000376_source">show source</a> ]</p>
+  <div id="M000376_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 115</span>
+115:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
+116:                 <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">read</span>
+117:         <span class="ruby-keyword kw">rescue</span>
+118:                 <span class="ruby-identifier">auto_disconnect</span>
+119:                 <span class="ruby-identifier">raise</span>
+120:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000379"></a><b>read_scalar</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000379_source')" id="l_M000379_source">show source</a> ]</p>
+  <div id="M000379_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 136</span>
+136:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_scalar</span>
+137:                 <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">read_scalar</span>
+138:         <span class="ruby-keyword kw">rescue</span>
+139:                 <span class="ruby-identifier">auto_disconnect</span>
+140:                 <span class="ruby-identifier">raise</span>
+141:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000380"></a><b>recv_io</b>(klass = IO, negotiate = true)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000380_source')" id="l_M000380_source">show source</a> ]</p>
+  <div id="M000380_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 143</span>
+143:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recv_io</span>(<span class="ruby-identifier">klass</span> = <span class="ruby-constant">IO</span>, <span class="ruby-identifier">negotiate</span> = <span class="ruby-keyword kw">true</span>)
+144:                 <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">recv_io</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">negotiate</span>)
+145:         <span class="ruby-keyword kw">rescue</span>
+146:                 <span class="ruby-identifier">auto_disconnect</span>
+147:                 <span class="ruby-identifier">raise</span>
+148:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000373"></a><b>status</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000373_source')" id="l_M000373_source">show source</a> ]</p>
+  <div id="M000373_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 90</span>
+90:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status</span>
+91:                 <span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;inspect&quot;</span>)
+92:                 <span class="ruby-identifier">check_security_response</span>
+93:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">read_scalar</span>
+94:         <span class="ruby-keyword kw">rescue</span>
+95:                 <span class="ruby-identifier">auto_disconnect</span>
+96:                 <span class="ruby-identifier">raise</span>
+97:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000377"></a><b>write</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000377_source')" id="l_M000377_source">show source</a> ]</p>
+  <div id="M000377_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 122</span>
+122:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+123:                 <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">write</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+124:         <span class="ruby-keyword kw">rescue</span>
+125:                 <span class="ruby-identifier">auto_disconnect</span>
+126:                 <span class="ruby-identifier">raise</span>
+127:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000378"></a><b>write_scalar</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000378_source')" id="l_M000378_source">show source</a> ]</p>
+  <div id="M000378_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 129</span>
+129:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_scalar</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+130:                 <span class="ruby-ivar">@channel</span>.<span class="ruby-identifier">write_scalar</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+131:         <span class="ruby-keyword kw">rescue</span>
+132:                 <span class="ruby-identifier">auto_disconnect</span>
+133:                 <span class="ruby-identifier">raise</span>
+134:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000374"></a><b>xml</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000374_source')" id="l_M000374_source">show source</a> ]</p>
+  <div id="M000374_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/message_client.rb, line 99</span>
+ 99:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xml</span>
+100:                 <span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;toXml&quot;</span>, <span class="ruby-keyword kw">true</span>)
+101:                 <span class="ruby-identifier">check_security_response</span>
+102:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">read_scalar</span>
+103:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

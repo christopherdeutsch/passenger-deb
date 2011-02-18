@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Standalone::ConfigFile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Standalone::ConfigFile</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/standalone/config_file_rb.html">lib/phusion_passenger/standalone/config_file.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000123">address</a></li>
+  <li><a href="#M000135">analytics</a></li>
+  <li><a href="#M000131">daemonize</a></li>
+  <li><a href="#M000136">debugger</a></li>
+  <li><a href="#M000133">domain_name</a></li>
+  <li><a href="#M000134">domain_names</a></li>
+  <li><a href="#M000126">env</a></li>
+  <li><a href="#M000125">environment</a></li>
+  <li><a href="#M000129">max_pool_size</a></li>
+  <li><a href="#M000130">min_instances</a></li>
+  <li><a href="#M000122">new</a></li>
+  <li><a href="#M000132">nginx_bin</a></li>
+  <li><a href="#M000124">port</a></li>
+  <li><a href="#M000128">rack_env</a></li>
+  <li><a href="#M000127">rails_env</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class <a href="ConfigFile/DisallowedContextError.html" class="link">PhusionPassenger::Standalone::ConfigFile::DisallowedContextError</a><br />
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>options</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000122"></a><b>new</b>(context, filename)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000122_source')" id="l_M000122_source">show source</a> ]</p>
+  <div id="M000122_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 42</span>
+42:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">filename</span>)
+43:                 <span class="ruby-ivar">@options</span>  = {}
+44:                 <span class="ruby-ivar">@context</span>  = <span class="ruby-identifier">context</span>
+45:                 <span class="ruby-ivar">@filename</span> = <span class="ruby-identifier">filename</span>
+46:                 <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-value str">'r'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+47:                         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">flock</span>(<span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">LOCK_SH</span>)
+48:                         <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>, <span class="ruby-identifier">filename</span>)
+49:                 <span class="ruby-keyword kw">end</span>
+50:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000123"></a><b>address</b>(addr)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000123_source')" id="l_M000123_source">show source</a> ]</p>
+  <div id="M000123_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 52</span>
+52:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">address</span>(<span class="ruby-identifier">addr</span>)
+53:                 <span class="ruby-identifier">allowed_contexts</span>(<span class="ruby-identifier">:port</span>, <span class="ruby-identifier">:global_config</span>)
+54:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:address</span>] = <span class="ruby-identifier">addr</span>
+55:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:tcp_explicitly_given</span>] = <span class="ruby-keyword kw">true</span>
+56:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000135"></a><b>analytics</b>(value)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000135_source')" id="l_M000135_source">show source</a> ]</p>
+  <div id="M000135_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 101</span>
+101:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">analytics</span>(<span class="ruby-identifier">value</span>)
+102:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:analytics</span>] = <span class="ruby-identifier">value</span>
+103:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000131"></a><b>daemonize</b>(on)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000131_source')" id="l_M000131_source">show source</a> ]</p>
+  <div id="M000131_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 81</span>
+81:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">daemonize</span>(<span class="ruby-identifier">on</span>)
+82:                 <span class="ruby-identifier">allowed_contexts</span>(<span class="ruby-identifier">:daemonize</span>, <span class="ruby-identifier">:global_config</span>)
+83:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:daemonize</span>] = <span class="ruby-identifier">on</span>
+84:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000136"></a><b>debugger</b>(value)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000136_source')" id="l_M000136_source">show source</a> ]</p>
+  <div id="M000136_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 105</span>
+105:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debugger</span>(<span class="ruby-identifier">value</span>)
+106:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:debugger</span>] = <span class="ruby-identifier">value</span>
+107:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000133"></a><b>domain_name</b>(name)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000133_source')" id="l_M000133_source">show source</a> ]</p>
+  <div id="M000133_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 91</span>
+91:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">domain_name</span>(<span class="ruby-identifier">name</span>)
+92:                 <span class="ruby-identifier">allowed_contexts</span>(<span class="ruby-identifier">:domain_name</span>, <span class="ruby-identifier">:local_config</span>)
+93:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:server_names</span>] = [<span class="ruby-identifier">name</span>]
+94:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000134"></a><b>domain_names</b>(*names)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000134_source')" id="l_M000134_source">show source</a> ]</p>
+  <div id="M000134_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 96</span>
+96:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">domain_names</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">names</span>)
+97:                 <span class="ruby-identifier">allowed_contexts</span>(<span class="ruby-identifier">:domain_names</span>, <span class="ruby-identifier">:local_config</span>)
+98:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:server_names</span>] = <span class="ruby-identifier">names</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">flatten</span>
+99:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000126"></a><b>env</b>(name)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="ConfigFile.html#M000125">#environment</a>
+</p>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000125"></a><b>environment</b>(name)
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="ConfigFile.html#M000126">env</a>
+  <a href="ConfigFile.html#M000127">rails_env</a>
+  <a href="ConfigFile.html#M000128">rack_env</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000125_source')" id="l_M000125_source">show source</a> ]</p>
+  <div id="M000125_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 64</span>
+64:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">environment</span>(<span class="ruby-identifier">name</span>)
+65:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:env</span>] = <span class="ruby-identifier">name</span>
+66:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000129"></a><b>max_pool_size</b>(number)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000129_source')" id="l_M000129_source">show source</a> ]</p>
+  <div id="M000129_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 72</span>
+72:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">max_pool_size</span>(<span class="ruby-identifier">number</span>)
+73:                 <span class="ruby-identifier">allowed_contexts</span>(<span class="ruby-identifier">:max_pool_size</span>, <span class="ruby-identifier">:global_config</span>)
+74:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:max_pool_size</span>] = <span class="ruby-identifier">number</span>
+75:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000130"></a><b>min_instances</b>(number)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000130_source')" id="l_M000130_source">show source</a> ]</p>
+  <div id="M000130_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 77</span>
+77:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">min_instances</span>(<span class="ruby-identifier">number</span>)
+78:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:min_instances</span>] = <span class="ruby-identifier">number</span>
+79:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000132"></a><b>nginx_bin</b>(filename)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000132_source')" id="l_M000132_source">show source</a> ]</p>
+  <div id="M000132_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 86</span>
+86:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nginx_bin</span>(<span class="ruby-identifier">filename</span>)
+87:                 <span class="ruby-identifier">allowed_contexts</span>(<span class="ruby-identifier">:nginx_bin</span>, <span class="ruby-identifier">:global_config</span>)
+88:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:nginx_bin</span>] = <span class="ruby-identifier">filename</span>
+89:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000124"></a><b>port</b>(number)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000124_source')" id="l_M000124_source">show source</a> ]</p>
+  <div id="M000124_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/config_file.rb, line 58</span>
+58:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">port</span>(<span class="ruby-identifier">number</span>)
+59:                 <span class="ruby-identifier">allowed_contexts</span>(<span class="ruby-identifier">:port</span>, <span class="ruby-identifier">:global_config</span>)
+60:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:port</span>] = <span class="ruby-identifier">number</span>
+61:                 <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:tcp_explicitly_given</span>] = <span class="ruby-keyword kw">true</span>
+62:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000128"></a><b>rack_env</b>(name)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="ConfigFile.html#M000125">#environment</a>
+</p>
+  </div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000127"></a><b>rails_env</b>(name)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="ConfigFile.html#M000125">#environment</a>
+</p>
+  </div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

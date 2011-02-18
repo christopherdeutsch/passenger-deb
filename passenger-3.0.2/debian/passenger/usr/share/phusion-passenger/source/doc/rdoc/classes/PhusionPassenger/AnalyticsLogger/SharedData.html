@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::AnalyticsLogger::SharedData</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::AnalyticsLogger::SharedData</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/analytics_logger_rb.html">lib/phusion_passenger/analytics_logger.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000300">disconnect</a></li>
+  <li><a href="#M000299">new</a></li>
+  <li><a href="#M000301">ref</a></li>
+  <li><a href="#M000303">synchronize</a></li>
+  <li><a href="#M000302">unref</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>client</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000299"></a><b>new</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000299_source')" id="l_M000299_source">show source</a> ]</p>
+  <div id="M000299_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 267</span>
+267:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+268:                         <span class="ruby-ivar">@mutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+269:                         <span class="ruby-ivar">@refcount</span> = <span class="ruby-value">1</span>
+270:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000300"></a><b>disconnect</b>(check_error_response = false)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000300_source')" id="l_M000300_source">show source</a> ]</p>
+  <div id="M000300_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 272</span>
+272:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disconnect</span>(<span class="ruby-identifier">check_error_response</span> = <span class="ruby-keyword kw">false</span>)
+273:                         <span class="ruby-comment cmt"># TODO: implement check_error_response support</span>
+274:                         <span class="ruby-ivar">@client</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@client</span>
+275:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000301"></a><b>ref</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000301_source')" id="l_M000301_source">show source</a> ]</p>
+  <div id="M000301_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 277</span>
+277:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ref</span>
+278:                         <span class="ruby-ivar">@refcount</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+279:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000303"></a><b>synchronize</b>() {|| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000303_source')" id="l_M000303_source">show source</a> ]</p>
+  <div id="M000303_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 288</span>
+288:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">synchronize</span>
+289:                         <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+290:                                 <span class="ruby-keyword kw">yield</span>
+291:                         <span class="ruby-keyword kw">end</span>
+292:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000302"></a><b>unref</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000302_source')" id="l_M000302_source">show source</a> ]</p>
+  <div id="M000302_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 281</span>
+281:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unref</span>
+282:                         <span class="ruby-ivar">@refcount</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+283:                         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@refcount</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+284:                                 <span class="ruby-identifier">disconnect</span>
+285:                         <span class="ruby-keyword kw">end</span>
+286:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

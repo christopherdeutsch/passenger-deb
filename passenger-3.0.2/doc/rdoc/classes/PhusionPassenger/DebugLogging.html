@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Module: PhusionPassenger::DebugLogging</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Module</span><br />PhusionPassenger::DebugLogging</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../files/lib/phusion_passenger/debug_logging_rb.html">lib/phusion_passenger/debug_logging.rb</a>
+        </td>
+      </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000031">_log_device</a></li>
+  <li><a href="#M000035">debug</a></li>
+  <li><a href="#M000033">error</a></li>
+  <li><a href="#M000028">included</a></li>
+  <li><a href="#M000030">log_file=</a></li>
+  <li><a href="#M000029">log_level=</a></li>
+  <li><a href="#M000032">stderr_evaluator=</a></li>
+  <li><a href="#M000036">trace</a></li>
+  <li><a href="#M000034">warn</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000031"></a><b>_log_device</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000031_source')" id="l_M000031_source">show source</a> ]</p>
+  <div id="M000031_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 55</span>
+55:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_log_device</span>
+56:                 <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@@log_device</span>
+57:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000028"></a><b>included</b>(klass)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000028_source')" id="l_M000028_source">show source</a> ]</p>
+  <div id="M000028_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 34</span>
+34:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">klass</span>)
+35:                 <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+36:                         <span class="ruby-identifier">private</span> <span class="ruby-identifier">:debug</span>
+37:                         <span class="ruby-identifier">private</span> <span class="ruby-identifier">:trace</span>
+38:                 <span class="ruby-keyword kw">end</span>
+39:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000030"></a><b>log_file=</b>(filename)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000030_source')" id="l_M000030_source">show source</a> ]</p>
+  <div id="M000030_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 45</span>
+45:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">log_file=</span>(<span class="ruby-identifier">filename</span>)
+46:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">filename</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">filename</span>.<span class="ruby-identifier">empty?</span>
+47:                         <span class="ruby-ivar">@@log_filename</span> = <span class="ruby-keyword kw">nil</span>
+48:                 <span class="ruby-keyword kw">else</span>
+49:                         <span class="ruby-ivar">@@log_filename</span> = <span class="ruby-identifier">filename</span>
+50:                 <span class="ruby-keyword kw">end</span>
+51:                 <span class="ruby-ivar">@@log_device</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@log_device</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@@log_device</span>.<span class="ruby-identifier">closed?</span>
+52:                 <span class="ruby-ivar">@@log_device</span> = <span class="ruby-keyword kw">nil</span>
+53:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000029"></a><b>log_level=</b>(level)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000029_source')" id="l_M000029_source">show source</a> ]</p>
+  <div id="M000029_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 41</span>
+41:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">log_level=</span>(<span class="ruby-identifier">level</span>)
+42:                 <span class="ruby-ivar">@@log_level</span> = <span class="ruby-identifier">level</span>
+43:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000032"></a><b>stderr_evaluator=</b>(block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000032_source')" id="l_M000032_source">show source</a> ]</p>
+  <div id="M000032_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 59</span>
+59:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">stderr_evaluator=</span>(<span class="ruby-identifier">block</span>)
+60:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+61:                         <span class="ruby-ivar">@@stderr_evaluator</span> = <span class="ruby-identifier">block</span>
+62:                 <span class="ruby-keyword kw">else</span>
+63:                         <span class="ruby-ivar">@@stderr_evaluator</span> = <span class="ruby-identifier">lambda</span> { <span class="ruby-constant">STDERR</span> }
+64:                 <span class="ruby-keyword kw">end</span>
+65:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000035"></a><b>debug</b>(message)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000035_source')" id="l_M000035_source">show source</a> ]</p>
+  <div id="M000035_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 77</span>
+77:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug</span>(<span class="ruby-identifier">message</span>)
+78:                 <span class="ruby-identifier">trace</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">message</span>, <span class="ruby-value">1</span>)
+79:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000033"></a><b>error</b>(message)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000033_source')" id="l_M000033_source">show source</a> ]</p>
+  <div id="M000033_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 67</span>
+67:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">error</span>(<span class="ruby-identifier">message</span>)
+68:                 <span class="ruby-identifier">trace</span>(<span class="ruby-value">-1</span>, <span class="ruby-identifier">message</span>, <span class="ruby-value">1</span>)
+69:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000036"></a><b>trace</b>(level, message, nesting_level = 0)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000036_source')" id="l_M000036_source">show source</a> ]</p>
+  <div id="M000036_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 82</span>
+ 82:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace</span>(<span class="ruby-identifier">level</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">nesting_level</span> = <span class="ruby-value">0</span>)
+ 83:                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@log_level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">level</span>
+ 84:                         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@log_filename</span>
+ 85:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@@log_device</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@@log_device</span>.<span class="ruby-identifier">closed?</span>
+ 86:                                         <span class="ruby-ivar">@@log_device</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@@log_filename</span>, <span class="ruby-value str">&quot;a&quot;</span>)
+ 87:                                 <span class="ruby-keyword kw">end</span>
+ 88:                                 <span class="ruby-identifier">output</span> = <span class="ruby-ivar">@@log_device</span>
+ 89:                         <span class="ruby-keyword kw">else</span>
+ 90:                                 <span class="ruby-identifier">output</span> = <span class="ruby-ivar">@@stderr_evaluator</span>.<span class="ruby-identifier">call</span>
+ 91:                         <span class="ruby-keyword kw">end</span>
+ 92:                         <span class="ruby-identifier">location</span> = <span class="ruby-identifier">caller</span>[<span class="ruby-identifier">nesting_level</span>].<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/.*phusion_passenger\//</span>, <span class="ruby-value str">''</span>)
+ 93:                         <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/(.*):.*/</span>, <span class="ruby-value str">'\1'</span>)
+ 94:                         <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+ 95:                         <span class="ruby-identifier">time_str</span> = <span class="ruby-identifier">now</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">&quot;%Y-%m-%d %H:%M:%S.&quot;</span>)
+ 96:                         <span class="ruby-identifier">time_str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%03d&quot;</span>, <span class="ruby-identifier">now</span>.<span class="ruby-identifier">usec</span> <span class="ruby-operator">/</span> <span class="ruby-value">1000</span>)
+ 97:                         <span class="ruby-identifier">output</span>.<span class="ruby-identifier">write</span>(<span class="ruby-node">&quot;[ pid=#{$$} thr=#{Thread.current.object_id} file=#{location} time=#{time_str} ]: #{message}\n&quot;</span>)
+ 98:                         <span class="ruby-identifier">output</span>.<span class="ruby-identifier">flush</span>
+ 99:                 <span class="ruby-keyword kw">end</span>
+100:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000034"></a><b>warn</b>(message)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000034_source')" id="l_M000034_source">show source</a> ]</p>
+  <div id="M000034_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/debug_logging.rb, line 72</span>
+72:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">warn</span>(<span class="ruby-identifier">message</span>)
+73:                 <span class="ruby-identifier">trace</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">message</span>, <span class="ruby-value">1</span>)
+74:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

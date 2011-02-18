@@ -1,0 +1,31 @@
+Format: 1.8
+Date: Fri, 18 Feb 2011 08:37:05 +0000
+Source: passenger
+Binary: passenger
+Architecture: source amd64
+Version: 3.0.2-1
+Distribution: unstable
+Urgency: low
+Maintainer: root <root@ip-10-117-43-239.ec2.internal>
+Changed-By: root <root@ip-10-117-43-239.ec2.internal>
+Description: 
+ passenger  - <insert up to 60 chars description>
+Changes: 
+ passenger (3.0.2-1) unstable; urgency=low
+ .
+   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+Checksums-Sha1: 
+ 70bcdeb23190ad0d90e2b232e47963fd4a6bd1dc 778 passenger_3.0.2-1.dsc
+ 2c7211619da3c69d124eae2fd7aeb4ee0db9fe93 32778447 passenger_3.0.2.orig.tar.gz
+ e3ec6dbc56b40968a33148e6b084caef80bcd293 12293 passenger_3.0.2-1.diff.gz
+ df565c12e7fbf792e53006b3d652eac4740fe6b5 5323048 passenger_3.0.2-1_amd64.deb
+Checksums-Sha256: 
+ 9c9dc688e9514a22e942c3a1c424945679480e151a7175089deb1e3c28ab413a 778 passenger_3.0.2-1.dsc
+ 62c9714424d25c16c259524395530b9a0338813b4e40576e620a078ce541a566 32778447 passenger_3.0.2.orig.tar.gz
+ 95f5a24f71007114306757135bffaa6b9e9bba0ac737dc395b0b475e893bbb5c 12293 passenger_3.0.2-1.diff.gz
+ d5669bcf10a585527f9216d56ddc59d8bf3bb3e5c7b4f5d4dd29df4b07dfc068 5323048 passenger_3.0.2-1_amd64.deb
+Files: 
+ f358b575b1c2eed9ef3cd1af335e33c4 778 unknown extra passenger_3.0.2-1.dsc
+ 537875f94fab9c5cfa2000e5534d146b 32778447 unknown extra passenger_3.0.2.orig.tar.gz
+ 81394e8c086eaef4986f31d2eaba0302 12293 unknown extra passenger_3.0.2-1.diff.gz
+ 5477409b200e9fcb3b90bc34a12c658b 5323048 unknown extra passenger_3.0.2-1_amd64.deb

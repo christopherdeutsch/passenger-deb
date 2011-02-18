@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::AdminTools::MemoryStats::Process</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::AdminTools::MemoryStats::Process</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../../files/lib/phusion_passenger/admin_tools/memory_stats_rb.html">lib/phusion_passenger/admin_tools/memory_stats.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+Information about a single process.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000169">private_dirty_rss_in_mb</a></li>
+  <li><a href="#M000168">rss_in_mb</a></li>
+  <li><a href="#M000170">to_a</a></li>
+  <li><a href="#M000167">vm_size_in_mb</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>cpu</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>name</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>pid</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>ppid</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>private_dirty_rss</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>rss</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>threads</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>vm_size</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000169"></a><b>private_dirty_rss_in_mb</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000169_source')" id="l_M000169_source">show source</a> ]</p>
+  <div id="M000169_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/admin_tools/memory_stats.rb, line 49</span>
+49:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">private_dirty_rss_in_mb</span>
+50:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">private_dirty_rss</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Numeric</span>)
+51:                                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%.1f MB&quot;</span>, <span class="ruby-identifier">private_dirty_rss</span> <span class="ruby-operator">/</span> <span class="ruby-value">1024.0</span>)
+52:                         <span class="ruby-keyword kw">else</span>
+53:                                 <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;?&quot;</span>
+54:                         <span class="ruby-keyword kw">end</span>
+55:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000168"></a><b>rss_in_mb</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000168_source')" id="l_M000168_source">show source</a> ]</p>
+  <div id="M000168_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/admin_tools/memory_stats.rb, line 45</span>
+45:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rss_in_mb</span>
+46:                         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%.1f MB&quot;</span>, <span class="ruby-identifier">rss</span> <span class="ruby-operator">/</span> <span class="ruby-value">1024.0</span>)
+47:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000170"></a><b>to_a</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000170_source')" id="l_M000170_source">show source</a> ]</p>
+  <div id="M000170_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/admin_tools/memory_stats.rb, line 57</span>
+57:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_a</span>
+58:                         <span class="ruby-keyword kw">return</span> [<span class="ruby-identifier">pid</span>, <span class="ruby-identifier">ppid</span>, <span class="ruby-identifier">vm_size_in_mb</span>, <span class="ruby-identifier">private_dirty_rss_in_mb</span>, <span class="ruby-identifier">rss_in_mb</span>, <span class="ruby-identifier">name</span>]
+59:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000167"></a><b>vm_size_in_mb</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000167_source')" id="l_M000167_source">show source</a> ]</p>
+  <div id="M000167_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/admin_tools/memory_stats.rb, line 41</span>
+41:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vm_size_in_mb</span>
+42:                         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%.1f MB&quot;</span>, <span class="ruby-identifier">vm_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">1024.0</span>)
+43:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Utils::FileSystemWatcher::DirInfo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Utils::FileSystemWatcher::DirInfo</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../../files/lib/phusion_passenger/utils/file_system_watcher_rb.html">lib/phusion_passenger/utils/file_system_watcher.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000281">changed?</a></li>
+  <li><a href="#M000280">new</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">DOT</td>
+    <td>=</td>
+    <td class="attr-value">&quot;.&quot;</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">DOTDOT</td>
+    <td>=</td>
+    <td class="attr-value">&quot;..&quot;</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000280"></a><b>new</b>(filename, stat)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000280_source')" id="l_M000280_source">show source</a> ]</p>
+  <div id="M000280_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/file_system_watcher.rb, line 123</span>
+123:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">stat</span>)
+124:                                 <span class="ruby-ivar">@filename</span> = <span class="ruby-identifier">filename</span>
+125:                                 <span class="ruby-ivar">@stat</span> = <span class="ruby-identifier">stat</span>
+126:                                 <span class="ruby-ivar">@subfiles</span> = {}
+127:                                 <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-identifier">filename</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+128:                                         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span> <span class="ruby-operator">==</span> <span class="ruby-constant">DOT</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">entry</span> <span class="ruby-operator">==</span> <span class="ruby-constant">DOTDOT</span>
+129:                                         <span class="ruby-identifier">subfilename</span> = <span class="ruby-node">&quot;#{filename}/#{entry}&quot;</span>
+130:                                         <span class="ruby-ivar">@subfiles</span>[<span class="ruby-identifier">entry</span>] = <span class="ruby-constant">FileInfo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">subfilename</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">subfilename</span>))
+131:                                 <span class="ruby-keyword kw">end</span>
+132:                         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000281"></a><b>changed?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000281_source')" id="l_M000281_source">show source</a> ]</p>
+  <div id="M000281_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/file_system_watcher.rb, line 134</span>
+134:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">changed?</span>
+135:                                 <span class="ruby-identifier">new_stat</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-ivar">@filename</span>)
+136:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@stat</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">new_stat</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_stat</span>.<span class="ruby-identifier">directory?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@stat</span>.<span class="ruby-identifier">mtime</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">new_stat</span>.<span class="ruby-identifier">mtime</span>
+137:                                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+138:                                 <span class="ruby-keyword kw">end</span>
+139:                                 
+140:                                 <span class="ruby-identifier">count</span> = <span class="ruby-value">0</span>
+141:                                 <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-ivar">@filename</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+142:                                         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span> <span class="ruby-operator">==</span> <span class="ruby-constant">DOT</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">entry</span> <span class="ruby-operator">==</span> <span class="ruby-constant">DOTDOT</span>
+143:                                         <span class="ruby-identifier">subfilename</span> = <span class="ruby-node">&quot;#{@filename}/#{entry}&quot;</span>
+144:                                 
+145:                                         <span class="ruby-identifier">file_info</span> = <span class="ruby-ivar">@subfiles</span>[<span class="ruby-identifier">entry</span>]
+146:                                         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">file_info</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">file_info</span>.<span class="ruby-identifier">changed?</span>(<span class="ruby-keyword kw">false</span>)
+147:                                                 <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+148:                                         <span class="ruby-keyword kw">else</span>
+149:                                                 <span class="ruby-identifier">count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+150:                                         <span class="ruby-keyword kw">end</span>
+151:                                 <span class="ruby-keyword kw">end</span>
+152:                                 
+153:                                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@subfiles</span>.<span class="ruby-identifier">size</span>
+154:                         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+155:                                 <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+156:                         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

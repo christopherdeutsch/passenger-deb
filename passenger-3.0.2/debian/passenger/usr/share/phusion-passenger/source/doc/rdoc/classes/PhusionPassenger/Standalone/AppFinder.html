@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Standalone::AppFinder</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Standalone::AppFinder</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/standalone/app_finder_rb.html">lib/phusion_passenger/standalone/app_finder.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+  <div class="description"><p>
+Security note: can run arbitrary ruby code by evaluating passenger.conf
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000118">looks_like_app_directory?</a></li>
+  <li><a href="#M000121">monitor</a></li>
+  <li><a href="#M000119">new</a></li>
+  <li><a href="#M000120">scan</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>apps</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>dirs</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000118"></a><b>looks_like_app_directory?</b>(dir)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000118_source')" id="l_M000118_source">show source</a> ]</p>
+  <div id="M000118_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/app_finder.rb, line 33</span>
+33:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">looks_like_app_directory?</span>(<span class="ruby-identifier">dir</span>)
+34:                 <span class="ruby-keyword kw">return</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-node">&quot;#{dir}/config.ru&quot;</span>) <span class="ruby-operator">||</span>
+35:                         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-node">&quot;#{dir}/config/environment.rb&quot;</span>) <span class="ruby-operator">||</span>
+36:                         <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-node">&quot;#{dir}/passenger_wsgi.py&quot;</span>)
+37:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000119"></a><b>new</b>(dirs, options = {})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000119_source')" id="l_M000119_source">show source</a> ]</p>
+  <div id="M000119_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/app_finder.rb, line 39</span>
+39:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">dirs</span>, <span class="ruby-identifier">options</span> = {})
+40:                 <span class="ruby-ivar">@dirs</span> = <span class="ruby-identifier">dirs</span>
+41:                 <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
+42:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000121"></a><b>monitor</b>(termination_pipe) {|new_apps| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000121_source')" id="l_M000121_source">show source</a> ]</p>
+  <div id="M000121_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/app_finder.rb, line 77</span>
+ 77:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">monitor</span>(<span class="ruby-identifier">termination_pipe</span>)
+ 78:                 <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;You must call #scan first&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@apps</span>
+ 79:                 
+ 80:                 <span class="ruby-identifier">watcher</span> = <span class="ruby-constant">PhusionPassenger</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">FileSystemWatcher</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@watchlist</span>, <span class="ruby-identifier">termination_pipe</span>)
+ 81:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">wait_on_io</span>(<span class="ruby-identifier">termination_pipe</span>, <span class="ruby-value">3</span>)
+ 82:                         <span class="ruby-keyword kw">return</span>
+ 83:                 <span class="ruby-keyword kw">end</span>
+ 84:                 
+ 85:                 <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+ 86:                         <span class="ruby-identifier">changed</span> = <span class="ruby-identifier">watcher</span>.<span class="ruby-identifier">wait_for_change</span>
+ 87:                         <span class="ruby-identifier">watcher</span>.<span class="ruby-identifier">close</span>
+ 88:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">changed</span>
+ 89:                                 <span class="ruby-identifier">old_apps</span> = <span class="ruby-ivar">@apps</span>
+ 90:                                 <span class="ruby-comment cmt"># The change could be caused by a write to some passenger.conf file.</span>
+ 91:                                 <span class="ruby-comment cmt"># Wait for a short period so that the write has a chance to finish.</span>
+ 92:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">wait_on_io</span>(<span class="ruby-identifier">termination_pipe</span>, <span class="ruby-value">0</span><span class="ruby-value">.25</span>)
+ 93:                                         <span class="ruby-keyword kw">return</span>
+ 94:                                 <span class="ruby-keyword kw">end</span>
+ 95:                                 
+ 96:                                 <span class="ruby-identifier">new_apps</span> = <span class="ruby-identifier">scan</span>
+ 97:                                 <span class="ruby-identifier">watcher</span> = <span class="ruby-constant">PhusionPassenger</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">FileSystemWatcher</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@watchlist</span>, <span class="ruby-identifier">termination_pipe</span>)
+ 98:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">old_apps</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">new_apps</span>
+ 99:                                         <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">new_apps</span>)
+100:                                 <span class="ruby-keyword kw">end</span>
+101:                                 
+102:                                 <span class="ruby-comment cmt"># Don't process change events again for a short while,</span>
+103:                                 <span class="ruby-comment cmt"># but do detect changes while waiting.</span>
+104:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">wait_on_io</span>(<span class="ruby-identifier">termination_pipe</span>, <span class="ruby-value">3</span>)
+105:                                         <span class="ruby-keyword kw">return</span>
+106:                                 <span class="ruby-keyword kw">end</span>
+107:                         <span class="ruby-keyword kw">else</span>
+108:                                 <span class="ruby-keyword kw">return</span>
+109:                         <span class="ruby-keyword kw">end</span>
+110:                 <span class="ruby-keyword kw">end</span>
+111:         <span class="ruby-keyword kw">ensure</span>
+112:                 <span class="ruby-identifier">watcher</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">watcher</span>
+113:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000120"></a><b>scan</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000120_source')" id="l_M000120_source">show source</a> ]</p>
+  <div id="M000120_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/app_finder.rb, line 44</span>
+44:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scan</span>
+45:                 <span class="ruby-identifier">apps</span> = []
+46:                 <span class="ruby-identifier">watchlist</span> = []
+47:                 
+48:                 <span class="ruby-identifier">app_root</span> = <span class="ruby-identifier">find_app_root</span>
+49:                 <span class="ruby-identifier">apps</span> <span class="ruby-operator">&lt;&lt;</span> {
+50:                         <span class="ruby-identifier">:server_names</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;_&quot;</span>],
+51:                         <span class="ruby-identifier">:root</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">app_root</span>
+52:                 }
+53:                 <span class="ruby-identifier">watchlist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">app_root</span>
+54:                 <span class="ruby-identifier">watchlist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{app_root}/config&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-node">&quot;#{app_root}/config&quot;</span>)
+55:                 <span class="ruby-identifier">watchlist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{app_root}/passenger.conf&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-node">&quot;#{app_root}/passenger.conf&quot;</span>)
+56:                 
+57:                 <span class="ruby-identifier">apps</span>.<span class="ruby-identifier">sort!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span><span class="ruby-operator">|</span>
+58:                         <span class="ruby-identifier">a</span>[<span class="ruby-identifier">:root</span>] <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">b</span>[<span class="ruby-identifier">:root</span>]
+59:                 <span class="ruby-keyword kw">end</span>
+60:                 <span class="ruby-identifier">apps</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
+61:                         <span class="ruby-identifier">config_filename</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">app</span>[<span class="ruby-identifier">:root</span>], <span class="ruby-value str">&quot;passenger.conf&quot;</span>)
+62:                         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">config_filename</span>)
+63:                                 <span class="ruby-identifier">local_options</span> = <span class="ruby-identifier">load_config_file</span>(<span class="ruby-identifier">:local_config</span>, <span class="ruby-identifier">config_filename</span>)
+64:                                 <span class="ruby-identifier">merged_options</span> = <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">app</span>)
+65:                                 <span class="ruby-identifier">merged_options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">local_options</span>)
+66:                                 <span class="ruby-identifier">merged_options</span>
+67:                         <span class="ruby-keyword kw">else</span>
+68:                                 <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">app</span>)
+69:                         <span class="ruby-keyword kw">end</span>
+70:                 <span class="ruby-keyword kw">end</span>
+71:                 
+72:                 <span class="ruby-ivar">@apps</span> = <span class="ruby-identifier">apps</span>
+73:                 <span class="ruby-ivar">@watchlist</span> = <span class="ruby-identifier">watchlist</span>
+74:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">apps</span>
+75:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

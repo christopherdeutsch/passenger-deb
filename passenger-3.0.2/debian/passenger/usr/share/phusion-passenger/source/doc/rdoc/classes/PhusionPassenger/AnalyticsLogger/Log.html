@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::AnalyticsLogger::Log</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::AnalyticsLogger::Log</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/analytics_logger_rb.html">lib/phusion_passenger/analytics_logger.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000294">begin_measure</a></li>
+  <li><a href="#M000298">close</a></li>
+  <li><a href="#M000295">end_measure</a></li>
+  <li><a href="#M000296">measure</a></li>
+  <li><a href="#M000297">measured_time_points</a></li>
+  <li><a href="#M000293">message</a></li>
+  <li><a href="#M000291">new</a></li>
+  <li><a href="#M000292">null?</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>txn_id</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000291"></a><b>new</b>(shared_data = nil, txn_id = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000291_source')" id="l_M000291_source">show source</a> ]</p>
+  <div id="M000291_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 41</span>
+41:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">shared_data</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">txn_id</span> = <span class="ruby-keyword kw">nil</span>)
+42:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">shared_data</span>
+43:                                 <span class="ruby-ivar">@shared_data</span> = <span class="ruby-identifier">shared_data</span>
+44:                                 <span class="ruby-ivar">@txn_id</span> = <span class="ruby-identifier">txn_id</span>
+45:                                 <span class="ruby-identifier">shared_data</span>.<span class="ruby-identifier">ref</span>
+46:                         <span class="ruby-keyword kw">end</span>
+47:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000294"></a><b>begin_measure</b>(name, extra_info = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000294_source')" id="l_M000294_source">show source</a> ]</p>
+  <div id="M000294_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 61</span>
+61:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">begin_measure</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">extra_info</span> = <span class="ruby-keyword kw">nil</span>)
+62:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extra_info</span>
+63:                                 <span class="ruby-identifier">extra_info_base64</span> = [<span class="ruby-identifier">extra_info</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;m&quot;</span>)
+64:                                 <span class="ruby-identifier">extra_info_base64</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>)
+65:                                 <span class="ruby-identifier">extra_info_base64</span>.<span class="ruby-identifier">strip!</span>
+66:                         <span class="ruby-keyword kw">else</span>
+67:                                 <span class="ruby-identifier">extra_info_base64</span> = <span class="ruby-keyword kw">nil</span>
+68:                         <span class="ruby-keyword kw">end</span>
+69:                         <span class="ruby-identifier">times</span> = <span class="ruby-constant">NativeSupport</span>.<span class="ruby-identifier">process_times</span>
+70:                         <span class="ruby-identifier">message</span> <span class="ruby-node">&quot;BEGIN: #{name} (#{current_timestamp.to_s(36)},#{times.utime.to_s(36)},#{times.stime.to_s(36)}) #{extra_info_base64}&quot;</span>
+71:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000298"></a><b>close</b>(flush_to_disk = false)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000298_source')" id="l_M000298_source">show source</a> ]</p>
+  <div id="M000298_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 108</span>
+108:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>(<span class="ruby-identifier">flush_to_disk</span> = <span class="ruby-keyword kw">false</span>)
+109:                         <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+110:                                 <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">client</span>.<span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;closeTransaction&quot;</span>, <span class="ruby-ivar">@txn_id</span>,
+111:                                         <span class="ruby-constant">AnalyticsLogger</span>.<span class="ruby-identifier">timestamp_string</span>)
+112:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">flush_to_disk</span>
+113:                                         <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">client</span>.<span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;flush&quot;</span>)
+114:                                         <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">client</span>.<span class="ruby-identifier">read</span>
+115:                                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span> <span class="ruby-operator">!=</span> [<span class="ruby-value str">&quot;ok&quot;</span>]
+116:                                                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid logging server response #{result.inspect} to the 'flush' command&quot;</span>
+117:                                         <span class="ruby-keyword kw">end</span>
+118:                                 <span class="ruby-keyword kw">end</span>
+119:                                 <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">unref</span>
+120:                                 <span class="ruby-ivar">@shared_data</span> = <span class="ruby-keyword kw">nil</span>
+121:                         <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@shared_data</span>
+122:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000295"></a><b>end_measure</b>(name, error_encountered = false)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000295_source')" id="l_M000295_source">show source</a> ]</p>
+  <div id="M000295_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 73</span>
+73:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">end_measure</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">error_encountered</span> = <span class="ruby-keyword kw">false</span>)
+74:                         <span class="ruby-identifier">times</span> = <span class="ruby-constant">NativeSupport</span>.<span class="ruby-identifier">process_times</span>
+75:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">error_encountered</span>
+76:                                 <span class="ruby-identifier">message</span> <span class="ruby-node">&quot;FAIL: #{name} (#{current_timestamp.to_s(36)},#{times.utime.to_s(36)},#{times.stime.to_s(36)})&quot;</span>
+77:                         <span class="ruby-keyword kw">else</span>
+78:                                 <span class="ruby-identifier">message</span> <span class="ruby-node">&quot;END: #{name} (#{current_timestamp.to_s(36)},#{times.utime.to_s(36)},#{times.stime.to_s(36)})&quot;</span>
+79:                         <span class="ruby-keyword kw">end</span>
+80:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000296"></a><b>measure</b>(name, extra_info = nil) {|| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000296_source')" id="l_M000296_source">show source</a> ]</p>
+  <div id="M000296_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 82</span>
+82:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">measure</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">extra_info</span> = <span class="ruby-keyword kw">nil</span>)
+83:                         <span class="ruby-identifier">begin_measure</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">extra_info</span>)
+84:                         <span class="ruby-keyword kw">begin</span>
+85:                                 <span class="ruby-keyword kw">yield</span>
+86:                         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+87:                                 <span class="ruby-identifier">error</span> = <span class="ruby-keyword kw">true</span>
+88:                                 <span class="ruby-identifier">raise</span>
+89:                         <span class="ruby-keyword kw">ensure</span>
+90:                                 <span class="ruby-identifier">end_measure</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">error</span>)
+91:                         <span class="ruby-keyword kw">end</span>
+92:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000297"></a><b>measured_time_points</b>(name, begin_time, end_time, extra_info = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000297_source')" id="l_M000297_source">show source</a> ]</p>
+  <div id="M000297_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 94</span>
+ 94:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">measured_time_points</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">begin_time</span>, <span class="ruby-identifier">end_time</span>, <span class="ruby-identifier">extra_info</span> = <span class="ruby-keyword kw">nil</span>)
+ 95:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extra_info</span>
+ 96:                                 <span class="ruby-identifier">extra_info_base64</span> = [<span class="ruby-identifier">extra_info</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;m&quot;</span>)
+ 97:                                 <span class="ruby-identifier">extra_info_base64</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>)
+ 98:                                 <span class="ruby-identifier">extra_info_base64</span>.<span class="ruby-identifier">strip!</span>
+ 99:                         <span class="ruby-keyword kw">else</span>
+100:                                 <span class="ruby-identifier">extra_info_base64</span> = <span class="ruby-keyword kw">nil</span>
+101:                         <span class="ruby-keyword kw">end</span>
+102:                         <span class="ruby-identifier">begin_timestamp</span> = <span class="ruby-identifier">begin_time</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-value">1_000_000</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">begin_time</span>.<span class="ruby-identifier">usec</span>
+103:                         <span class="ruby-identifier">end_timestamp</span> = <span class="ruby-identifier">end_time</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-value">1_000_000</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">end_time</span>.<span class="ruby-identifier">usec</span>
+104:                         <span class="ruby-identifier">message</span> <span class="ruby-node">&quot;BEGIN: #{name} (#{begin_timestamp.to_s(36)}) #{extra_info_base64}&quot;</span>
+105:                         <span class="ruby-identifier">message</span> <span class="ruby-node">&quot;END: #{name} (#{end_timestamp.to_s(36)})&quot;</span>
+106:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000293"></a><b>message</b>(text)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000293_source')" id="l_M000293_source">show source</a> ]</p>
+  <div id="M000293_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 53</span>
+53:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">message</span>(<span class="ruby-identifier">text</span>)
+54:                         <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+55:                                 <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">client</span>.<span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;log&quot;</span>, <span class="ruby-ivar">@txn_id</span>,
+56:                                         <span class="ruby-constant">AnalyticsLogger</span>.<span class="ruby-identifier">timestamp_string</span>)
+57:                                 <span class="ruby-ivar">@shared_data</span>.<span class="ruby-identifier">client</span>.<span class="ruby-identifier">write_scalar</span>(<span class="ruby-identifier">text</span>)
+58:                         <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@shared_data</span>
+59:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000292"></a><b>null?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000292_source')" id="l_M000292_source">show source</a> ]</p>
+  <div id="M000292_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/analytics_logger.rb, line 49</span>
+49:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">null?</span>
+50:                         <span class="ruby-keyword kw">return</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@shared_data</span>
+51:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

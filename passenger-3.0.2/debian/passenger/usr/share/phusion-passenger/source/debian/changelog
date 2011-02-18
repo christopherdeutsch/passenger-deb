@@ -1,0 +1,5 @@
+passenger (3.0.2-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- root <root@ip-10-117-43-239.ec2.internal>  Fri, 18 Feb 2011 08:37:05 +0000

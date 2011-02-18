@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Utils::FileSystemWatcher</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Utils::FileSystemWatcher</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/utils/file_system_watcher_rb.html">lib/phusion_passenger/utils/file_system_watcher.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Object
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000279">close</a></li>
+  <li><a href="#M000277">new</a></li>
+  <li><a href="#M000276">opens_files?</a></li>
+  <li><a href="#M000278">wait_for_change</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class <a href="FileSystemWatcher/DirInfo.html" class="link">PhusionPassenger::Utils::FileSystemWatcher::DirInfo</a><br />
+Class <a href="FileSystemWatcher/FileInfo.html" class="link">PhusionPassenger::Utils::FileSystemWatcher::FileInfo</a><br />
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>poll_interval</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000277"></a><b>new</b>(filenames, termination_pipe = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000277_source')" id="l_M000277_source">show source</a> ]</p>
+  <div id="M000277_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/file_system_watcher.rb, line 81</span>
+81:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">filenames</span>, <span class="ruby-identifier">termination_pipe</span> = <span class="ruby-keyword kw">nil</span>)
+82:                         <span class="ruby-ivar">@poll_interval</span> = <span class="ruby-value">3</span>
+83:                         <span class="ruby-ivar">@termination_pipe</span> = <span class="ruby-identifier">termination_pipe</span>
+84:                         <span class="ruby-ivar">@dirs</span>  = []
+85:                         <span class="ruby-ivar">@files</span> = []
+86:                 
+87:                         <span class="ruby-keyword kw">begin</span>
+88:                                 <span class="ruby-identifier">filenames</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
+89:                                         <span class="ruby-identifier">stat</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">filename</span>)
+90:                                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">stat</span>.<span class="ruby-identifier">directory?</span>
+91:                                                 <span class="ruby-ivar">@dirs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">DirInfo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">stat</span>)
+92:                                         <span class="ruby-keyword kw">else</span>
+93:                                                 <span class="ruby-ivar">@files</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">FileInfo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">stat</span>)
+94:                                         <span class="ruby-keyword kw">end</span>
+95:                                 <span class="ruby-keyword kw">end</span>
+96:                         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+97:                                 <span class="ruby-ivar">@dirs</span> = <span class="ruby-ivar">@files</span> = <span class="ruby-keyword kw">nil</span>
+98:                         <span class="ruby-keyword kw">end</span>
+99:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000276"></a><b>opens_files?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000276_source')" id="l_M000276_source">show source</a> ]</p>
+  <div id="M000276_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/file_system_watcher.rb, line 77</span>
+77:                 <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">opens_files?</span>
+78:                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+79:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000279"></a><b>close</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000279_source')" id="l_M000279_source">show source</a> ]</p>
+  <div id="M000279_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/file_system_watcher.rb, line 115</span>
+115:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+116:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000278"></a><b>wait_for_change</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000278_source')" id="l_M000278_source">show source</a> ]</p>
+  <div id="M000278_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/utils/file_system_watcher.rb, line 101</span>
+101:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wait_for_change</span>
+102:                         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@dirs</span>
+103:                                 <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+104:                         <span class="ruby-keyword kw">end</span>
+105:                         
+106:                         <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+107:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">changed?</span>
+108:                                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+109:                                 <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">select</span>([<span class="ruby-ivar">@termination_pipe</span>], <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-ivar">@poll_interval</span>)
+110:                                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+111:                                 <span class="ruby-keyword kw">end</span>
+112:                         <span class="ruby-keyword kw">end</span>
+113:                 <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: PhusionPassenger::Standalone::StartCommand</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+
+        function toggleSource( id )
+        {
+          var elem
+          var link
+
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />PhusionPassenger::Standalone::StartCommand</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../../files/lib/phusion_passenger/standalone/start_command_rb.html">lib/phusion_passenger/standalone/start_command.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+        <a href="Command.html">
+Command
+         </a>
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+
+  <div id="bodyContent">
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000094">description</a></li>
+  <li><a href="#M000095">new</a></li>
+  <li><a href="#M000096">run</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000094"></a><b>description</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000094_source')" id="l_M000094_source">show source</a> ]</p>
+  <div id="M000094_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/start_command.rb, line 42</span>
+42:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">description</span>
+43:                 <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Start Phusion Passenger Standalone.&quot;</span>
+44:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="method">
+  <div class="title">
+    <a name="M000095"></a><b>new</b>(args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000095_source')" id="l_M000095_source">show source</a> ]</p>
+  <div id="M000095_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/start_command.rb, line 46</span>
+46:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">args</span>)
+47:                 <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">args</span>)
+48:                 <span class="ruby-ivar">@console_mutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+49:                 <span class="ruby-ivar">@termination_pipe</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+50:                 <span class="ruby-ivar">@threads</span> = []
+51:                 <span class="ruby-ivar">@interruptable_threads</span> = []
+52:                 <span class="ruby-ivar">@plugin</span> = <span class="ruby-constant">PhusionPassenger</span><span class="ruby-operator">::</span><span class="ruby-constant">Plugin</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'standalone/start_command'</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@options</span>)
+53:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000096"></a><b>run</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000096_source')" id="l_M000096_source">show source</a> ]</p>
+  <div id="M000096_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/phusion_passenger/standalone/start_command.rb, line 55</span>
+ 55:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>
+ 56:                 <span class="ruby-identifier">parse_my_options</span>
+ 57:                 <span class="ruby-identifier">sanity_check_options</span>
+ 58:                 
+ 59:                 <span class="ruby-identifier">ensure_nginx_installed</span>
+ 60:                 <span class="ruby-identifier">require_file_tail</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">should_watch_logs?</span>
+ 61:                 <span class="ruby-identifier">determine_various_resource_locations</span>
+ 62:                 <span class="ruby-identifier">require_app_finder</span>
+ 63:                 <span class="ruby-ivar">@app_finder</span> = <span class="ruby-constant">AppFinder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@args</span>, <span class="ruby-ivar">@options</span>)
+ 64:                 <span class="ruby-ivar">@apps</span> = <span class="ruby-ivar">@app_finder</span>.<span class="ruby-identifier">scan</span>
+ 65:                 <span class="ruby-ivar">@plugin</span>.<span class="ruby-identifier">call_hook</span>(<span class="ruby-identifier">:found_apps</span>, <span class="ruby-ivar">@apps</span>)
+ 66:                 
+ 67:                 <span class="ruby-identifier">extra_controller_options</span> = {}
+ 68:                 <span class="ruby-ivar">@plugin</span>.<span class="ruby-identifier">call_hook</span>(<span class="ruby-identifier">:before_creating_nginx_controller</span>, <span class="ruby-identifier">extra_controller_options</span>)
+ 69:                 <span class="ruby-identifier">create_nginx_controller</span>(<span class="ruby-identifier">extra_controller_options</span>)
+ 70:                 
+ 71:                 <span class="ruby-keyword kw">begin</span>
+ 72:                         <span class="ruby-identifier">start_nginx</span>
+ 73:                         <span class="ruby-identifier">show_intro_message</span>
+ 74:                         <span class="ruby-identifier">daemonize</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:daemonize</span>]
+ 75:                         <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">abort_on_exception</span> = <span class="ruby-keyword kw">true</span>
+ 76:                         <span class="ruby-ivar">@plugin</span>.<span class="ruby-identifier">call_hook</span>(<span class="ruby-identifier">:nginx_started</span>, <span class="ruby-ivar">@nginx</span>)
+ 77:                         <span class="ruby-comment cmt">########################</span>
+ 78:                         <span class="ruby-comment cmt">########################</span>
+ 79:                         <span class="ruby-identifier">watch_log_files_in_background</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">should_watch_logs?</span>
+ 80:                         <span class="ruby-identifier">wait_until_nginx_has_exited</span>
+ 81:                 <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Interrupt</span>
+ 82:                         <span class="ruby-identifier">stop_threads</span>
+ 83:                         <span class="ruby-identifier">stop_nginx</span>
+ 84:                         <span class="ruby-identifier">exit</span> <span class="ruby-value">2</span>
+ 85:                 <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SignalException</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">signal</span>
+ 86:                         <span class="ruby-identifier">stop_threads</span>
+ 87:                         <span class="ruby-identifier">stop_nginx</span>
+ 88:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">signal</span>.<span class="ruby-identifier">message</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'SIGINT'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">signal</span>.<span class="ruby-identifier">message</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'SIGTERM'</span>
+ 89:                                 <span class="ruby-identifier">exit</span> <span class="ruby-value">2</span>
+ 90:                         <span class="ruby-keyword kw">else</span>
+ 91:                                 <span class="ruby-identifier">raise</span>
+ 92:                         <span class="ruby-keyword kw">end</span>
+ 93:                 <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+ 94:                         <span class="ruby-identifier">stop_threads</span>
+ 95:                         <span class="ruby-identifier">stop_nginx</span>
+ 96:                         <span class="ruby-identifier">raise</span>
+ 97:                 <span class="ruby-keyword kw">ensure</span>
+ 98:                         <span class="ruby-identifier">stop_threads</span>
+ 99:                 <span class="ruby-keyword kw">end</span>
+100:         <span class="ruby-keyword kw">ensure</span>
+101:                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@temp_dir</span>
+102:                         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span>(<span class="ruby-ivar">@temp_dir</span>) <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>
+103:                 <span class="ruby-keyword kw">end</span>
+104:                 <span class="ruby-ivar">@plugin</span>.<span class="ruby-identifier">call_hook</span>(<span class="ruby-identifier">:cleanup</span>)
+105:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+
+    </body>
+</html>
