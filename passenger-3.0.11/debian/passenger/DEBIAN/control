@@ -1,6 +1,6 @@
 Package: passenger
 Version: 3.0.11-1
-Architecture: i386
+Architecture: amd64
 Maintainer: root <root@ip-10-117-43-239.ec2.internal>
 Installed-Size: 64
 Section: unknown

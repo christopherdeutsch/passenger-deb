@@ -8,8 +8,8 @@ Homepage: <insert the upstream URL, if relevant>
 Standards-Version: 3.8.3
 Build-Depends: debhelper (>= 7)
 Checksums-Sha1: 
- ed6c3e488daf3c144de7adea9830fee831fb7206 9550222 passenger_3.0.11-1.tar.gz
+ 0b8ed8786db090334fc700a157fbb7d1b99183da 2282587 passenger_3.0.11-1.tar.gz
 Checksums-Sha256: 
- e3d10ee6d464df0d507c22d4344769ea4cc4f648fcc8cb71056a5ca8dbe65304 9550222 passenger_3.0.11-1.tar.gz
+ bca8691c0cd7c9a361b0ee99d6c55a26cabe4e932f61b411df4cf70cc9caf139 2282587 passenger_3.0.11-1.tar.gz
 Files: 
- 1383917355933c9c9561ec92f86f5ed8 9550222 passenger_3.0.11-1.tar.gz
+ bc03928e334a9510a609c42aac3362d3 2282587 passenger_3.0.11-1.tar.gz
