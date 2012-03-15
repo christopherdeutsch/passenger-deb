@@ -1,0 +1,10 @@
+Package: passenger
+Version: 3.0.11-1
+Architecture: i386
+Maintainer: root <root@ip-10-117-43-239.ec2.internal>
+Installed-Size: 64
+Section: unknown
+Priority: extra
+Homepage: <insert the upstream URL, if relevant>
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Fri, 18 Feb 2011 08:37:05 +0000
+Source: passenger
+Binary: passenger
+Architecture: source i386
+Version: 3.0.11-1
+Distribution: unstable
+Urgency: low
+Maintainer: root <root@ip-10-117-43-239.ec2.internal>
+Changed-By: Christopher Deutsch <christopher@rightscale.com>
+Description: 
+ passenger  - <insert up to 60 chars description>
+Changes: 
+ passenger (3.0.11-1) unstable; urgency=low
+ .
+   * Upgrade to 3.0.11
+Checksums-Sha1: 
+ 4f3925e9b6176faa9ad0bbb5990c6db40f777aff 532 passenger_3.0.11-1.dsc
+ ed6c3e488daf3c144de7adea9830fee831fb7206 9550222 passenger_3.0.11-1.tar.gz
+ 337d79575d3975891b5d11deb62c087472be85f8 15770 passenger_3.0.11-1_i386.deb
+Checksums-Sha256: 
+ 72919f0c2e77b36159f59f53851e77d1d9406b404f4327d93d0cf62a76c5bddd 532 passenger_3.0.11-1.dsc
+ e3d10ee6d464df0d507c22d4344769ea4cc4f648fcc8cb71056a5ca8dbe65304 9550222 passenger_3.0.11-1.tar.gz
+ 59bde021433e9f85fa094e7051988698ed60002b1b8294dde55271a11b0c6ad2 15770 passenger_3.0.11-1_i386.deb
+Files: 
+ 67f9a4ef920cbe551b341537bb0222db 532 unknown extra passenger_3.0.11-1.dsc
+ 1383917355933c9c9561ec92f86f5ed8 9550222 unknown extra passenger_3.0.11-1.tar.gz
+ eb74f14c4901be65497ba823a323853f 15770 unknown extra passenger_3.0.11-1_i386.deb
