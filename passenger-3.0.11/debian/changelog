@@ -2,10 +2,11 @@ passenger (3.0.11-1) unstable; urgency=low
 
   * Upgrade to 3.0.11
 
- -- Christopher Deutsch <christopher@rightscale.com> Fri, 18 Feb 2011 08:37:05 +0000
+  -- Christopher Deutsch <christopher@rightscale.com>  Thu, 15 Mar 2012 16:21:00 +0800
 
 passenger (3.0.2-1) unstable; urgency=low
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
 
- -- Christopher Deutsch <christopher@rightscale.com> Fri, 18 Feb 2011 08:37:05 +0000
+ -- Christopher Deutsch <christopher@rightscale.com>  Thu, 15 Mar 2012 16:21:00 +0800
+
